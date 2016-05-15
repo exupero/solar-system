@@ -102,9 +102,18 @@
       :font-size "8pt"
       :style {:border "1px solid lightgray"
               :cursor "move"}
-      :onmousedown #(emit 'pan/hold (.-clientX %) (.-clientY %))
-      :onmousemove #(emit 'pan/drag (.-clientX %) (.-clientY %))
-      :onmouseup #(emit 'pan/release)}
+      :onmousedown
+      (fn [e]
+        (.preventDefault e)
+        (emit 'pan/hold (.-clientX e) (.-clientY e)))
+      :onmousemove
+      (fn [e]
+        (.preventDefault e)
+        (emit 'pan/drag (.-clientX e) (.-clientY e)))
+      :onmouseup
+      (fn [e]
+        (.preventDefault e)
+        (emit 'pan/release))}
      [:rect {:width w :height h :fill "black"}]
      [:g {:transform (translate (/ w 2) (/ h 2))}
       [:g {:transform (apply translate pan)}
