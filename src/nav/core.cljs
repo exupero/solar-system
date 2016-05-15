@@ -10,15 +10,15 @@
 
 (defonce model
   (atom
-    {:zoom 20
+    {:zoom -77
      :locations []
      :date (geo/zero-time (js/Date.))
      }))
 
 (defmulti emit (fn [t & _] t))
 
-(defmethod emit 'set/zoom [_ level]
-  (swap! model assoc :zoom level))
+(defmethod emit 'zoom/change [_ f]
+  (swap! model update :zoom f))
 
 (defmethod emit 'set/date [_ date]
   (let [[y m d] (map int (string/split date "-"))]

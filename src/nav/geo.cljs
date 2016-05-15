@@ -9,6 +9,7 @@
 (def G 6.6740831e-11)
 
 (def pow #(.pow js/Math %1 %2))
+(def ln #(.log js/Math %))
 (def sqrt #(.sqrt js/Math %))
 (def sqr #(* % %))
 (def sin #(.sin js/Math %))
@@ -69,7 +70,7 @@
          ds)))))
 
 (defn orbit-dates [d period]
-  (let [n 50
+  (let [n 60
         step (/ period n)]
     (->> d
       (iterate #(seconds-after % (- step)))
