@@ -87,7 +87,7 @@
        :fill color}
       (b :body/name)]]))
 
-(defn chart [emit {:keys [zoom locations date]}]
+(defn chart [emit {:keys [zoom pan locations date]}]
   (let [[w h] [960 600]
         scale (fn [z]
                 (let [a (/ (geo/ln 2e-12) -100)]
@@ -100,29 +100,34 @@
       :height h
       :font-family "PT Sans"
       :font-size "8pt"
-      :style {:border "1px solid lightgray"}}
+      :style {:border "1px solid lightgray"
+              :cursor "move"}
+      :onmousedown #(emit 'pan/hold (.-clientX %) (.-clientY %))
+      :onmousemove #(emit 'pan/drag (.-clientX %) (.-clientY %))
+      :onmouseup #(emit 'pan/release)}
      [:rect {:width w :height h :fill "black"}]
      [:g {:transform (translate (/ w 2) (/ h 2))}
-      (for [b (bodies/all)]
-        [:path
-         {:d (path (for [d (->> (b :body/name) bodies/period geo/days->seconds (geo/orbit-dates date))]
-                     (project (bodies/position b d))))
-          :stroke (if (minor-body (b :body/type))
-                    "hsl(0, 0%, 20%)"
-                    "hsl(0, 0%, 50%)")
-          :fill "none"}])
-      (for [b (bodies/all)]
-        (body emit project date b))
-      (let [[from to] locations]
-        (when (and from to)
-          (let [from (project (bodies/position (bodies/body from) date))
-                to (project (bodies/position (bodies/body to) date))
-                mid (geo/v-div (geo/v-add from to) 2)]
-            [:g {}
-             [:path
-              {:d (path [from to])
-               :stroke "dodgerblue"
-               :fill "none"}]])))]]))
+      [:g {:transform (apply translate pan)}
+       (for [b (bodies/all)]
+         [:path
+          {:d (path (for [d (->> (b :body/name) bodies/period geo/days->seconds (geo/orbit-dates date))]
+                      (project (bodies/position b d))))
+           :stroke (if (minor-body (b :body/type))
+                     "hsl(0, 0%, 20%)"
+                     "hsl(0, 0%, 50%)")
+           :fill "none"}])
+       (for [b (bodies/all)]
+         (body emit project date b))
+       (let [[from to] locations]
+         (when (and from to)
+           (let [from (project (bodies/position (bodies/body from) date))
+                 to (project (bodies/position (bodies/body to) date))
+                 mid (geo/v-div (geo/v-add from to) 2)]
+             [:g {}
+              [:path
+               {:d (path [from to])
+                :stroke "dodgerblue"
+                :fill "none"}]])))]]]))
 
 (defn ui [emit model]
   [:main {}
