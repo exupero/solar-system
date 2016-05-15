@@ -83,6 +83,9 @@
   ([x n]
    (* (.round js/Math (/ x n)) n)))
 
+(defn days->seconds [d]
+  (* d 24 60 60))
+
 (defn seconds->days-hours-minutes [s]
   (let [days (/ s 60 60 24)
         days' (int days)

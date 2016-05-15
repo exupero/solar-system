@@ -51,33 +51,38 @@
                      (bodies/position to date))]
           [:span {} (geo/round (geo/meters->au dist) 0.01) " AU"])]))])
 
-(defn body [emit project date b]
-  [:g {:transform (->> date (bodies/position b) project (apply translate))
-       :style {:cursor "pointer"}
-       :onclick #(emit 'locations/add b)}
-   [:circle {:r 2 :fill "white"}]
-   [:text
-    {:dy -3
-     :text-anchor "middle"
-     :stroke "black"
-     :stroke-width 2}
-    (bodies/identifier b)]
-   [:text
-    {:dy -3
-     :text-anchor "middle"
-     :fill "white"}
-    (bodies/identifier b)]])
+(defn body [emit project date nm]
+  (let [color (if (#{:dwarf-planet :asteroid} (bodies/type nm))
+                "hsl(0, 0%, 70%)"
+                "hsl(0, 0%, 100%)")]
+    [:g {:transform (->> date (bodies/position nm) project (apply translate))
+         :style {:cursor "pointer"}
+         :onclick #(emit 'locations/add nm)}
+     [:circle {:r 2 :fill color}]
+     [:text
+      {:dy -3
+       :text-anchor "middle"
+       :stroke "black"
+       :stroke-width 2}
+      nm]
+     [:text
+      {:dy -3
+       :text-anchor "middle"
+       :fill color}
+      nm]]))
 
 (defn system [emit project date]
   [:g {}
-   (for [b bodies/planets]
+   (for [b (bodies/all)]
      [:path
-      {:d (path (for [d (geo/orbit-dates date (bodies/period b))]
-                  (project (bodies/position b d))))
-       :stroke "dimgray"
+      {:d (path (for [d (->> (b :body/name) bodies/period geo/days->seconds (geo/orbit-dates date))]
+                  (project (bodies/position (b :body/name) d))))
+       :stroke (if (#{:dwarf-planet :asteroid} (b :body/type))
+                 "hsl(0, 0%, 20%)"
+                 "hsl(0, 0%, 50%)")
        :fill "none"}])
-   (for [b (concat bodies/stars bodies/planets #_bodies/asteroids)]
-     (body emit project date b))])
+   (for [b (bodies/all)]
+     (body emit project date (b :body/name)))])
 
 (defn chart [emit {:keys [zoom locations date]}]
   (let [[w h] [500 500]
