@@ -93,17 +93,6 @@
          [?i :body/type ?t]]
        @bodies nm))
 
-(comment
-  (let [[from to] ["Saturn" "Uranus"]
-        date (js/Date. 2016 4 15)
-        dist (geo/dist
-               (position from date)
-               (position to date))
-        [d h m] (geo/seconds->days-hours-minutes
-                  (geo/travel-time dist 9.8))
-        ratio (geo/fuel-to-ship-mass-ratio dist (* 0.05 geo/c) 9.8)]
-    [d h m ratio]))
-
 (defonce initialize
   (d/transact!
     bodies
@@ -118,7 +107,7 @@
       :body/eccentricity 0.205630              ; degrees
       :body/inclination 7.005                  ; degrees from ecliptic
       :body/longitude-of-ascending-node 48.331 ; degrees
-      :body/argument-of-perihelion 29.124     ; degrees
+      :body/argument-of-perihelion 29.124      ; degrees
       :body/period 87.969                      ; days
       :body/mean-anomaly-at-epoch 174.796      ; degrees
       :body/epoch J2000}                       ; JavaScript date

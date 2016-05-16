@@ -42,7 +42,16 @@
           [:div {}
            [:div {}
             (geo/round (geo/meters->au dist) 0.01) " AU"
-            " (" (fmt-thousands (geo/round (/ dist 1000))) " km)"]])
+            " (" (fmt-thousands (geo/round (/ dist 1000))) " km)"]
+           (when (re-find #"travel" (-> js/window .-location .-search))
+             [:div {}
+              [:div {}
+               (let [[d h m] (geo/seconds->days-hours-minutes
+                               (geo/travel-time dist 9.8))]
+                 [:span {} d " days " h " hours " m " minutes"])]
+              [:div {}
+               (geo/round (* 100 (geo/fuel-to-ship-mass-ratio dist (* 0.05 geo/c) 9.8)) 0.1) "%"]
+              ])])
         "Click two bodies to see the distance between them."))]
    [:div {:className "spaced"}
     "Zoom:"
