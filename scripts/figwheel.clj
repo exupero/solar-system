@@ -4,7 +4,7 @@
 (ra/start-figwheel!
   {:figwheel-options {:css-dirs ["resources/public/css"]
                       :server-port 3454
-                      :nrepl-port 7889
+                      :nrepl-port 7893
                       :nrepl-middleware ["cider.nrepl/cider-middleware"
                                          "cemerick.piggieback/wrap-cljs-repl"]}
    :build-ids ["dev"]

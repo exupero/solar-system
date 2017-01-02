@@ -1,0 +1,328 @@
+[{:name "Sol" :type :star :mass #kg 1.98855e30 :position [0 0 0]}
+ {:name "Mercury"
+  :type :planet
+  :mass #kg 3.3011e23
+  :semi-major-axis #m 57.90905e9
+  :eccentricity 0.205630
+  :inclination #deg 7.005
+  :longitude-of-ascending-node #deg 48.331
+  :argument-of-perihelion #deg 29.124
+  :period #days 87.969
+  :mean-anomaly-at-epoch #deg 174.796
+  :epoch #epoch J2000}
+ {:name "Venus"
+  :type :planet
+  :mass #kg 4.8675e24
+  :semi-major-axis #m 108.208e9
+  :eccentricity 0.006772
+  :inclination #deg 3.39458
+  :longitude-of-ascending-node #deg 76.860
+  :argument-of-perihelion #deg 54.884
+  :period #days 224.701
+  :mean-anomaly-at-epoch #deg 50.115
+  :epoch #epoch J2000}
+ {:name "Earth"
+  :type :planet
+  :mass #kg 5.97237e24
+  :semi-major-axis #m 149.598023e9
+  :eccentricity 0.0167086
+  :inclination #deg 0.00005
+  :longitude-of-ascending-node #deg -11.26064
+  :argument-of-perihelion #deg 114.20783
+  :period #days 365.256363004
+  :mean-anomaly-at-epoch #deg 358.617
+  :epoch #epoch J2000}
+ {:name "Mars"
+  :type :planet
+  :mass #kg 6.4171e23
+  :semi-major-axis #m 227.9392e9
+  :eccentricity 0.0934
+  :inclination #deg 1.850
+  :longitude-of-ascending-node #deg 49.558
+  :argument-of-perihelion #deg 286.502
+  :period #days 686.971
+  :mean-anomaly-at-epoch #deg 19.373
+  :epoch #epoch J2000}
+ {:name "Jupiter"
+  :type :planet
+  :mass #kg 1.8986e27
+  :semi-major-axis #m 778.299e9
+  :eccentricity 0.048498
+  :inclination #deg 1.303
+  :longitude-of-ascending-node #deg 100.464
+  :argument-of-perihelion #deg 273.867
+  :period #days 4332.59
+  :mean-anomaly-at-epoch #deg 20.020
+  :epoch #epoch J2000}
+ {:name "Saturn"
+  :type :planet
+  :mass #kg 5.6836e26
+  :semi-major-axis #m 1429.39e9
+  :eccentricity 0.05555
+  :inclination #deg 2.485240
+  :longitude-of-ascending-node #deg 113.665
+  :argument-of-perihelion #deg 339.392
+  :period #days 10759.22
+  :mean-anomaly-at-epoch #deg 317.020
+  :epoch #epoch J2000}
+ {:name "Uranus"
+  :type :planet
+  :mass #kg 8.6810e25
+  :semi-major-axis #m 2875.04e9
+  :eccentricity 0.046381
+  :inclination #deg 0.773
+  :longitude-of-ascending-node #deg 74.006
+  :argument-of-perihelion #deg 96.998857
+  :period #days 30688.5
+  :mean-anomaly-at-epoch #deg 142.2386
+  :epoch #epoch J2000}
+ {:name "Neptune"
+  :type :planet
+  :mass #kg 1.0243e26
+  :semi-major-axis #m 4504.45e9
+  :eccentricity 0.009456
+  :inclination #deg 1.767975
+  :longitude-of-ascending-node #deg 131.784
+  :argument-of-perihelion #deg 276.336
+  :period #days 60182
+  :mean-anomaly-at-epoch #deg 256.228
+  :epoch #epoch J2000}
+ {:name "Ceres"
+  :type :dwarf-planet
+  :mass #kg 9.393e20
+  :semi-major-axis #m 414.01e9
+  :eccentricity 0.075823
+  :inclination #deg 10.593
+  :longitude-of-ascending-node #deg 80.3293
+  :argument-of-perihelion #deg 72.5220
+  :period #days 1681.63
+  :mean-anomaly-at-epoch #deg 95.9891
+  :epoch #epoch [2014 12 9]}
+ {:name "Pallas"
+  :type :asteroid
+  :mass #kg 2.11e20
+  :semi-major-axis #m 414.7e9
+  :eccentricity 0.23127363
+  :inclination #deg 34.840998
+  :longitude-of-ascending-node #deg 173.096248
+  :argument-of-perihelion #deg 309.930328
+  :period #days 1685.371678
+  :mean-anomaly-at-epoch #deg 78.228704
+  :epoch #epoch [2014 12 9]}
+ {:name "Vesta"
+  :type :asteroid
+  :mass #kg 2.59076e20
+  :semi-major-axis #au 2.36179
+  :eccentricity 0.08874
+  :inclination #deg 7.14043
+  :longitude-of-ascending-node #deg 103.85136
+  :argument-of-perihelion #deg 151.19853
+  :period #days 1325.75
+  :mean-anomaly-at-epoch #deg 20.86384
+  :epoch #epoch [2014 12 9]}
+ {:name "Juno"
+  :type :asteroid
+  :mass #kg 2.67e19
+  :semi-major-axis #m 399.725e9
+  :eccentricity 0.25545
+  :inclination #deg 12.9817
+  :longitude-of-ascending-node #deg 169.8712
+  :argument-of-perihelion #deg 248.4100
+  :period #days 1594.18
+  :mean-anomaly-at-epoch #deg 33.077
+  :epoch #epoch [2014 12 9]}
+ {:name "Astrea"
+  :type :asteroid
+  :mass #kg 2.9e18
+  :semi-major-axis #m 384.945e9
+  :eccentricity 0.19113549
+  :inclination #deg 5.368523
+  :longitude-of-ascending-node #deg 141.59556
+  :argument-of-perihelion #deg 358.92898
+  :period #days 1508.213773
+  :mean-anomaly-at-epoch #deg 260.189542
+  :epoch #epoch [2014 12 9]}
+ {:name "Hebe"
+  :type :asteroid
+  :mass #kg 1.28e19
+  :semi-major-axis #m 362.851e9
+  :eccentricity 0.202
+  :inclination #deg 14.751
+  :longitude-of-ascending-node #deg 138.752
+  :argument-of-perihelion #deg 239.492
+  :period #days 1379.756
+  :mean-anomaly-at-epoch #deg 247.947
+  :epoch #epoch [2005 11 26]}
+ {:name "Iris"
+  :type :asteroid
+  :mass #kg 1.62e19
+  :semi-major-axis #m 356.798e9
+  :eccentricity 0.231
+  :inclination #deg 5.527
+  :longitude-of-ascending-node #deg 259.727
+  :argument-of-perihelion #deg 145.440
+  :period #days 1345.375
+  :mean-anomaly-at-epoch #deg 269.531
+  :epoch #epoch [2005 11 26]}
+ {:name "Flora"
+  :type :asteroid
+  :mass #kg 8.47e18
+  :semi-major-axis #m 329.422e9
+  :eccentricity 0.1561
+  :inclination #deg 5.886
+  :longitude-of-ascending-node #deg 111.011
+  :argument-of-perihelion #deg 285.128
+  :period #days 1193.549
+  :mean-anomaly-at-epoch #deg 156.401
+  :epoch #epoch [2005 11 26]}
+ {:name "Metis"
+  :type :asteroid
+  :mass #kg 1.47e19
+  :semi-major-axis #m 357.556e9
+  :eccentricity 0.122
+  :inclination #deg 5.576
+  :longitude-of-ascending-node #deg 68.982
+  :argument-of-perihelion #deg 5.489
+  :period #days 1346.815
+  :mean-anomaly-at-epoch #deg 274.183
+  :epoch #epoch [2004 7 14]}
+ {:name "Hygiea"
+  :type :asteroid
+  :mass #kg 8.67e19
+  :semi-major-axis #au 3.1421
+  :eccentricity 0.1146
+  :inclination #deg 3.8377
+  :longitude-of-ascending-node #deg 283.41
+  :argument-of-perihelion #deg 312.10
+  :period #days 2034.3
+  :mean-anomaly-at-epoch #deg 264.46
+  :epoch #epoch [2015 6 27]}
+ {:name "Pluto"
+  :type :dwarf-planet
+  :mass #kg 1.303e22
+  :semi-major-axis #m 5915e9
+  :eccentricity 0.24905
+  :inclination #deg 17.1405
+  :longitude-of-ascending-node #deg 110.299
+  :argument-of-perihelion #deg 113.834
+  :period #days 90581
+  :mean-anomaly-at-epoch #deg 14.53
+  :epoch #epoch J2000}
+ {:name "Haumea"
+  :type :dwarf-planet
+  :mass #kg 4.006e21
+  :semi-major-axis #m 6465e9
+  :eccentricity 0.19126
+  :inclination #deg 28.19
+  :longitude-of-ascending-node #deg 121.79
+  :argument-of-perihelion #deg 240.20
+  :period #days 103774
+  :mean-anomaly-at-epoch #deg 209.07
+  :epoch #epoch [2014 12 9]}
+ {:name "Makemake"
+  :type :dwarf-planet
+  :mass #kg 4.4e21
+  :semi-major-axis #au 45.715
+  :eccentricity 0.15586
+  :inclination #deg 29.00685
+  :longitude-of-ascending-node #deg 79.3659
+  :argument-of-perihelion #deg 297.240
+  :period #days 112897
+  :mean-anomaly-at-epoch #deg 15
+  :epoch #epoch [2014 12 9]}
+ {:name "Eris"
+  :type :dwarf-planet
+  :mass #kg 1.66e22
+  :semi-major-axis #au 67.781
+  :eccentricity 0.44068
+  :inclination #deg 44.0445
+  :longitude-of-ascending-node #deg 35.9531
+  :argument-of-perihelion #deg 150.997
+  :period #days 203830
+  :mean-anomaly-at-epoch #deg 204.16
+  :epoch #epoch [2014 12 9]}
+ {:name "Orcus"
+  :type :dwarf-planet
+  :mass #kg 6.41e20
+  :semi-major-axis #m 59045e9
+  :eccentricity 0.21799
+  :inclination #deg 20.564
+  :longitude-of-ascending-node #deg 268.570
+  :argument-of-perihelion #deg 72.977
+  :period #days 90571.28
+  :mean-anomaly-at-epoch #deg 174.67
+  :epoch #epoch [2016 1 13]}
+ {:name "Salacia"
+  :type :dwarf-planet
+  :mass #kg 4.38e20
+  :semi-major-axis #m 62622e9
+  :eccentricity 0.10905
+  :inclination #deg 23.936
+  :longitude-of-ascending-node #deg 280.14
+  :argument-of-perihelion #deg 307.90
+  :period #days 98924
+  :mean-anomaly-at-epoch #deg 121.85
+  :epoch #epoch [2016 1 13]}
+ {:name "Quaoar"
+  :type :dwarf-planet
+  :mass #kg 1.4e21
+  :semi-major-axis #m 64885e9
+  :eccentricity 0.034704
+  :inclination #deg 7.9870
+  :longitude-of-ascending-node #deg 188.772
+  :argument-of-perihelion #deg 155.246
+  :period #days 104334
+  :mean-anomaly-at-epoch #deg 287.542
+  :epoch #epoch [2016 1 13]}
+ {:name "Sedna"
+  :type :dwarf-planet
+  :semi-major-axis #m 75730e9
+  :eccentricity 0.85491
+  :inclination #deg 11.92872
+  :longitude-of-ascending-node #deg 311.29
+  :argument-of-perihelion #deg 311.29
+  :period #years 11400
+  :mean-anomaly-at-epoch #deg 358.163
+  :epoch #epoch [2016 1 13]}
+ {:name "Varuna"
+  :type :dwarf-planet
+  :mass #kg 3.7e26
+  :semi-major-axis #m 6451.1e9
+  :eccentricity 0.050464
+  :inclination #deg 17.165
+  :longitude-of-ascending-node #deg 97.290
+  :argument-of-perihelion #deg 270.890
+  :period #days 103435
+  :mean-anomaly-at-epoch #deg 105.119
+  :epoch #epoch [2016 1 13]}
+ {:name "Ixion"
+  :type :dwarf-planet
+  :semi-major-axis #m 5909.9e9
+  :eccentricity 0.24171
+  :inclination #deg 19.619
+  :longitude-of-ascending-node #deg 71.019
+  :argument-of-perihelion #deg 299.730
+  :period #days 90692.7
+  :mean-anomaly-at-epoch #deg 280.540
+  :epoch #epoch [2016 1 13]}
+ {:name "Chaos"
+  :type :dwarf-planet
+  :semi-major-axis #m 6851.0e9
+  :eccentricity 0.10567
+  :inclination #deg 12.0502
+  :longitude-of-ascending-node #deg 50.9239
+  :argument-of-perihelion #deg 58.4097
+  :period #days 113199
+  :mean-anomaly-at-epoch #deg 337.2998
+  :epoch #epoch [2016 1 13]}
+ {:name "Huya"
+  :type :dwarf-planet
+  :semi-major-axis #m 5928.3e9
+  :eccentricity 0.27997
+  :inclination #deg 15.463
+  :longitude-of-ascending-node #deg 169.23
+  :argument-of-perihelion #deg 67.576
+  :period #days 91117.9
+  :mean-anomaly-at-epoch #deg 1.5319
+  :epoch #epoch [2016 1 13]}
+ ]

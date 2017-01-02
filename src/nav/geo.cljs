@@ -31,11 +31,6 @@
         x-next
         (recur x-next)))))
 
-(defn linear [[x1 x2] [y1 y2]]
-  (let [m (/ (- y1 y2) (- x1 x2))
-        b (- y1 (* m x1))]
-    #(+ b (* m %))))
-
 (defn dist [a b]
   (sqrt (reduce + (map (comp sqr diff) a b))))
 
@@ -121,60 +116,13 @@
    [(sin θ) (cos θ)     0]
    [0       0           1]])
 
-(defn v-add
-  "Vector vector addition"
-  [& args]
-  (apply mapv + args))
+(def au->meters #(* % 1.496e11))
 
-(defn v-mul
-  "Vector scalar multiplication"
-  [v s]
-  (mapv #(* s %) v))
+(def years->days #(* % 365.256363004))
 
-(defn v-div
-  "Vector scalar division"
-  [v s]
-  (mapv #(/ % s) v))
+(defn epoch
+  ([y m d] (epoch y m d 12))
+  ([y m d h]
+   (js/Date. y (dec m) d h 0 0)))
 
-(defn v-magnitude [v]
-  (dist [0 0 0] v))
-
-(defn v-norm [v]
-  (v-div v (v-magnitude v)))
-
-(defn tick [t [x v a]]
-  [(v-add x (v-mul v t) (v-mul a (* 0.5 t)))
-   (v-add v (v-mul a t))
-   a])
-
-(defn travel-time
-  "d - distance (m)
-   a - acceleration (m/s²)"
-  [d a]
-  ; accelerate at 'a' for half the distance, then
-  ; accelerate at '-a' for the other half.
-  ; d/2 = ½a(t/2)²
-  ; d/a = (t/2)²
-  ; √(d/a) = t/2
-  ; 2√(d/a) = t
-  (* 2 (sqrt (/ d a))))
-
-(defn fuel-to-ship-mass-ratio
-  "d - distance (m)
-   v - exhaust velocity (m/s)
-   a - acceleration (m/s²)"
-  [d v a]
-  ; vf² = vi² + 2ad
-  ; vf² - vi² = 2ad
-  ; (vf - vi)(vf + vi) = 2ad
-  ; Δv (vf + vi) = 2ad
-  ; (Δv)² = 2ad  -- where vi = 0
-  ; Δv = √(2ad)
-  ; Δv = ve ln(m0/md)  -- Tsiolkovsky rocket equation
-  ; √(2ad) = ve ln(m0/md)
-  ; √(2ad)/ve = ln (m0/md)
-  ; e^(√(2ad)/ve) = m0/md
-  ;               = (md+mf)/md
-  ;               = 1 + mf/md
-  ; e^(√(2ad)/ve) - 1 = mf/md
-  (dec (pow e (/ (sqrt (* 2 a d)) v))))
+(def J2000 (epoch 2000 1 1 12))

@@ -2,7 +2,7 @@
   (:require-macros [nav.macros :refer [spy]])
   (:require [clojure.string :as string]
             [nav.geo :as geo]
-            [nav.bodies :as bodies]))
+            [nav.orbit :as orbit]))
 
 (def minor-body #{:dwarf-planet :asteroid})
 
@@ -28,30 +28,18 @@
     "-" (left-pad 2 "0" (inc (.getMonth d)))
     "-" (left-pad 2 "0" (.getDate d))))
 
-(defn fmt-thousands [x]
-  (string/replace (.toString x) #"\B(?=(\d{3})+(?!\d))" ","))
-
 (defn controls [emit {:keys [zoom locations date]}]
   [:div {}
    [:div {:className "right"}
     (let [[from to] locations]
       (if (and from to)
         (let [dist (geo/dist
-                     (bodies/position (bodies/body from) date)
-                     (bodies/position (bodies/body to) date))]
+                     (orbit/position from date)
+                     (orbit/position to date))]
           [:div {}
            [:div {}
-            (geo/round (geo/meters->au dist) 0.01) " AU"
-            " (" (fmt-thousands (geo/round (/ dist 1000))) " km)"]
-           (when (re-find #"travel" (-> js/window .-location .-search))
-             [:div {}
-              [:div {}
-               (let [[d h m] (geo/seconds->days-hours-minutes
-                               (geo/travel-time dist 9.8))]
-                 [:span {} d " days " h " hours " m " minutes"])]
-              [:div {}
-               (geo/round (* 100 (geo/fuel-to-ship-mass-ratio dist (* 0.05 geo/c) 9.8)) 0.1) "%"]
-              ])])
+            (.toFixed (geo/meters->au dist) 3) " AU"
+            " (" (.toLocaleString (geo/round (/ dist 1000))) " km)"]])
         "Click two bodies to see the distance between them."))]
    [:div {:className "spaced"}
     "Zoom:"
@@ -72,15 +60,15 @@
       :onchange #(this-as this (emit 'set/date (.-value this)))}]]
    ])
 
-(defn body [emit project date b]
-  (let [size (if (minor-body (b :body/type))
+(defn body [emit project date body]
+  (let [size (if (minor-body (:type body))
                "8" "10")
-        color (if (minor-body (b :body/type))
+        color (if (minor-body (:type body))
                 "hsl(0, 0%, 70%)"
                 "hsl(0, 0%, 100%)")]
-    [:g {:transform (->> date (bodies/position b) project (apply translate))
+    [:g {:transform (->> date (orbit/position body) project (apply translate))
          :style {:cursor "pointer"}
-         :onclick #(emit 'locations/add (b :body/name))}
+         :onclick #(emit 'locations/add body)}
      [:circle {:r 2 :fill color}]
      [:text
       {:dy -3
@@ -88,15 +76,15 @@
        :text-anchor "middle"
        :stroke "black"
        :stroke-width 2}
-      (b :body/name)]
+      (:name body)]
      [:text
       {:dy -3
        :font-size size
        :text-anchor "middle"
        :fill color}
-      (b :body/name)]]))
+      (:name body)]]))
 
-(defn chart [emit {:keys [zoom pan locations date]}]
+(defn chart [emit {:keys [bodies zoom pan locations date]}]
   (let [[w h] [960 600]
         scale (fn [z]
                 (let [a (/ (geo/ln 2e-12) -100)]
@@ -126,21 +114,20 @@
      [:rect {:width w :height h :fill "black"}]
      [:g {:transform (translate (/ w 2) (/ h 2))}
       [:g {:transform (apply translate pan)}
-       (for [b (bodies/all)]
+       (for [body bodies]
          [:path
-          {:d (path (for [d (->> (b :body/name) bodies/period geo/days->seconds (geo/orbit-dates date))]
-                      (project (bodies/position b d))))
-           :stroke (if (minor-body (b :body/type))
+          {:d (path (for [date (->> body :period (geo/orbit-dates date))]
+                      (project (orbit/position body date))))
+           :stroke (if (minor-body (:type body))
                      "hsl(0, 0%, 20%)"
                      "hsl(0, 0%, 50%)")
            :fill "none"}])
-       (for [b (bodies/all)]
+       (for [b bodies]
          (body emit project date b))
        (let [[from to] locations]
          (when (and from to)
-           (let [from (project (bodies/position (bodies/body from) date))
-                 to (project (bodies/position (bodies/body to) date))
-                 mid (geo/v-div (geo/v-add from to) 2)]
+           (let [from (project (orbit/position from date))
+                 to (project (orbit/position to date))]
              [:g {}
               [:path
                {:d (path [from to])

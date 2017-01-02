@@ -32,7 +32,7 @@
   (/ (* a (- 1 (sqr e)))
      (+ 1 (* e (cos ν)))))
 
-(defn position [a e i Ω ω P M0 t0 t]
+(defn -position [a e i Ω ω P M0 t0 t]
   (let [M (mean-anomaly M0 P t0 t)
         E (eccentric-anomaly e M)
         ν (true-anomaly e E)
@@ -41,3 +41,18 @@
       (geo/matrix-transform (geo/rotate-z ω))
       (geo/matrix-transform (geo/rotate-x i))
       (geo/matrix-transform (geo/rotate-z Ω)))))
+
+(defn position [body date]
+  (if-let [p (:position body)]
+    p
+    (-position
+      (:semi-major-axis body)
+      (:eccentricity body)
+      (:inclination body)
+      (:longitude-of-ascending-node body)
+      (:argument-of-perihelion body)
+      (:period body)
+      (:mean-anomaly-at-epoch body)
+      (/ (.getTime (body :epoch)) 1000)
+      (/ (.getTime date) 1000)
+      )))

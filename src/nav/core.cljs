@@ -1,10 +1,11 @@
 (ns nav.core
-  (:require-macros [nav.macros :refer [spy]])
+  (:require-macros [nav.macros :refer [spy with-tag-parsers]])
   (:require [clojure.string :as string]
+            [cljs.reader :as edn]
             [vdom.core :refer [renderer]]
             [nav.geo :as geo]
-            [nav.ui :as ui]
-            [nav.bodies :as bodies]))
+            [nav.ui :as ui])
+  (:import [goog.net XhrIo]))
 
 (enable-console-print!)
 
@@ -14,7 +15,7 @@
      :pan [0 0]
      :locations []
      :date (geo/zero-time (js/Date.))
-     }))
+     :bodies []}))
 
 (defmulti emit (fn [t & _] t))
 
@@ -53,8 +54,29 @@
     (fn [_ _ _ model]
       (render! model))))
 
-(render! @model)
+(defn epoch [v]
+  (cond
+    (= v 'J2000) geo/J2000
+    (and (vector? v) (#{3 4} (count v))) (apply geo/epoch v)
+    :else (throw (js/Error. (str "Bad epoch: " v)))))
 
-(comment
-  (swap! model assoc :date (geo/zero-time (js/Date. 2254 9 30)))
-  )
+(defn read-bodies [raw]
+  (with-tag-parsers
+    [kg identity
+     m identity
+     deg geo/deg->rad
+     days geo/days->seconds
+     epoch epoch
+     au geo/au->meters
+     years #(-> % geo/years->days geo/days->seconds)]
+    (edn/read-string raw)))
+
+(defonce fetch-bodies
+  (.send XhrIo "bodies.edn"
+    (fn [e]
+      (this-as this
+        (swap! model assoc :bodies (read-bodies (.getResponseText this)))))
+    "GET" nil
+    #js {"Content-Type" "application/edn"}))
+
+(render! @model)

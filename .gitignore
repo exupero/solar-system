@@ -13,5 +13,5 @@ pom.xml.asc
 
 js-dev
 
-/resources/public/js
+/resources/public/js/*
 !/resources/public/js/main.js
